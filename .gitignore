@@ -1,0 +1,6 @@
+.vscode
+node_modules
+.env
+code_secret_client.json
+package-lock.json
+package.json
