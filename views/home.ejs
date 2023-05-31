@@ -2,10 +2,8 @@
 if(isLoggedIn) { %>
 <div class="motivation-section">
     <p>
-        <br><br>
         With so many wonders to be uncovered, we can't wait to see what
         treasures you'll find. <strong>Happy bidding!</strong>
-        <br><br>
     </p>
 </div>
 <% } else { %>
@@ -29,7 +27,6 @@ if(isLoggedIn) { %>
 </div>
 <% } %>
 <h1>CATEGORIES</h1>
-<br><br><br>
 <div class="card-grid">
     <div class="card">
         <a href="/category/books">
@@ -129,11 +126,15 @@ if(isLoggedIn) { %>
 <style>
     .motivation-section {
         background-color: #f5f5f5;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .motivation-section p {
         font-size: 18px;
-        text-align: center;
+        margin-top: 10px;
     }
 
     .welcome-section {

@@ -27,7 +27,10 @@
                                 <% objects.forEach((object) => { %>
                                 <a
                                     href="/objects/<%= object._id %>"
-                                    style="color: inherit; text-decoration: none"
+                                    style="
+                                        color: inherit;
+                                        text-decoration: none;
+                                    "
                                 >
                                     <div class="object-container">
                                         <div class="object-image-container">
@@ -37,7 +40,9 @@
                                             />
                                         </div>
                                         <div class="object-details-container">
-                                            <h2 class="object-title"><%= object.title %></h2>
+                                            <h2 class="object-title">
+                                                <%= object.title %>
+                                            </h2>
                                             <p class="object-description">
                                                 <%= object.description %>
                                             </p>
@@ -51,11 +56,12 @@
                             </div>
                         </div>
                         <% } else { %>
-                            <br><br><br><br>
-                            <h1 class="category-title">You haven't posted any object</h1>
+                        <br /><br /><br /><br />
+                        <h1 class="category-title">
+                            You haven't posted any object
+                        </h1>
                         <% } %>
                     </div>
-
                 </div>
                 <div class="tab-pane" id="security">
                     <h3>Previous bids:</h3>
@@ -63,40 +69,58 @@
 
                     <div>
                         <% if (objectsForBids && objectsForBids.length > 0) { %>
-                          <div class="category-container">
+                        <div class="category-container">
                             <div class="object-list">
-                              <% objectsForBids.forEach((objectsForBid) => { %>
-                                <a href="/objects/<%= objectsForBid._id %>" style="color: inherit; text-decoration: none">
-                                  <div class="object-container">
-                                    <% objectsForBid.bids.forEach((bid) => { %>
-                                      <h2>Your bid was: <%= bid.amount %> </h2>
-                                    <% }); %>
-                                    <div class="object-image-container">
-                                      <img src="/uploads/<%= objectsForBid.image %>" alt="<%= objectsForBid.title %>">
+                                <% objectsForBids.forEach((objectsForBid) => {
+                                %>
+                                <a
+                                    href="/objects/<%= objectsForBid._id %>"
+                                    style="
+                                        color: inherit;
+                                        text-decoration: none;
+                                    "
+                                >
+                                    <div class="object-container">
+                                        <% objectsForBid.bids.forEach((bid) => {
+                                        %>
+                                        <h2>Your bid was: <%= bid.amount %></h2>
+                                        <% }); %>
+                                        <div class="object-image-container">
+                                            <img
+                                                src="/uploads/<%= objectsForBid.image %>"
+                                                alt="<%= objectsForBid.title %>"
+                                            />
+                                        </div>
+                                        <div class="object-details-container">
+                                            <h2 class="object-title">
+                                                <%= objectsForBid.title %>
+                                            </h2>
+                                            <p class="object-description">
+                                                <%= objectsForBid.description %>
+                                            </p>
+                                            <p class="object-price">
+                                                <%= objectsForBid.startingPrice
+                                                %> DZD
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="object-details-container">
-                                      <h2 class="object-title"><%= objectsForBid.title %></h2>
-                                      <p class="object-description"><%= objectsForBid.description %></p>
-                                      <p class="object-price"><%= objectsForBid.startingPrice %> DZD</p>
-                                    </div>
-                                  </div>
                                 </a>
-                              <% }); %>
+                                <% }); %>
                             </div>
-                          </div>
+                        </div>
                         <% } else { %>
-                          <br><br><br><br>
-                          <h1 class="category-title">You haven't posted any object</h1>
+                        <br /><br /><br /><br />
+                        <h1 class="category-title">
+                            You haven't posted any object
+                        </h1>
                         <% } %>
-                      </div>                      
-
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <%- include ("./partials/footer") %>
-
 
 <style>
     .category-container {

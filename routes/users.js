@@ -39,7 +39,4 @@ router.post('/upload-profile-picture', ensureAuthenticated, uploadProfilePicture
 // POST User Bid Handle
 router.post('/bids/:id', ensureAuthenticated, userBidSubmitController.handleBidSubmit)
 
-// GET Sell Page
-router.get('/history', ensureAuthenticated, getController.getHistoryPage);
-
 module.exports = router;

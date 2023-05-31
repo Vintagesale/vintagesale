@@ -1,36 +1,348 @@
 <%- include ("./partials/header") %>
 <div class="container mt-5">
-    <h1>Profile</h1>
-    <div class="row mt-5">
-        <div class="col-md-4">
-            <div class="text-center position-relative d-flex justify-content-end" style="margin-right: 70px;" >
-                <div class="rounded-circle overflow-hidden" style="width: 200px; height: 200px;">
-                    <img
-                        src="<%= '/uploads/' + user.profilePicture%>"
-                        alt="Profile Picture"
-                        class="w-100 h-100"
-                    />
-                </div>
-                <form action="/users/upload-profile-picture" method="POST" enctype="multipart/form-data" class="position-absolute bottom-0 end-0;">
-                    <label class="btn btn-primary" >
-                        <i class="fas fa-upload"></i>
-                        <input type="file" name="profilePicture" id="profilePicture" accept="image/*" onchange="this.form.submit()" style="display: none;">
-                    </label>
-                </form>
+    <div class="row">
+        <div class="col-md-3" style="padding: 20px; border: 1px solid #ccc">
+            <div class="list-group">
+                <h3>Account Settings</h3>
+                <a
+                    href="#profile"
+                    class="list-group-item list-group-item-action active"
+                    >Profile</a
+                >
+                <a
+                    href="#personal-information"
+                    class="list-group-item list-group-item-action"
+                    >Personal Information</a
+                >
+                <a
+                    href="#security"
+                    class="list-group-item list-group-item-action"
+                    >Security</a
+                >
+                <h3 style="margin-top: 10px">History</h3>
+                <a
+                    href="#auctions-history"
+                    class="list-group-item list-group-item-action"
+                    >Auctions History</a
+                >
+                <a
+                    href="#bids-history"
+                    class="list-group-item list-group-item-action"
+                    >Bids History</a
+                >
             </div>
         </div>
-        <div class="col-md-8">
-            <h3><%= user.firstName %> <%= user.lastName %></h3>
-            <p><strong>Email:</strong> <%= user.email %></p>
-            <p><strong>Bio:</strong>
-            <div class="border p-3">
-                <%= user.bio %>
+        <div class="col-md-9">
+            <div class="tab-content">
+                <div class="tab-pane active" id="profile">
+                    <h3>Profile</h3>
+                    <%- include ("./partials/messages"); %>
+                    <div class="col-md-9">
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <div
+                                    class="text-center position-relative d-flex justify-content-end"
+                                    style="margin-right: 0px"
+                                >
+                                    <div
+                                        class="rounded-circle overflow-hidden"
+                                        style="width: 125px; height: 125px"
+                                    >
+                                        <img
+                                            src="<%= '/uploads/' + user.profilePicture%>"
+                                            alt="Profile Picture"
+                                            class="w-100 h-100"
+                                        />
+                                    </div>
+                                    <form
+                                        action="/users/upload-profile-picture"
+                                        method="POST"
+                                        enctype="multipart/form-data"
+                                        class="position-absolute bottom-0 end-0;"
+                                    >
+                                        <label class="btn btn-primary">
+                                            <i class="fas fa-upload"></i>
+                                            <input
+                                                type="file"
+                                                name="profilePicture"
+                                                id="profilePicture"
+                                                accept="image/*"
+                                                onchange="this.form.submit()"
+                                                style="display: none"
+                                            />
+                                        </label>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <h3>
+                                    <%= user.firstName %> <%= user.lastName %>
+                                </h3>
+                                <p><strong>Email:</strong> <%= user.email %></p>
+                                <div class="border p-3"><%= user.bio %></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="personal-information">
+                    <h3>Personal Information</h3>
+                    <%- include ("./partials/messages"); %>
+                    <form method="POST" action="/users/info-update">
+                        <div class="form-group">
+                            <label for="first-name">First Name</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="first-name"
+                                name="firstName"
+                                value="<%= user.firstName %>"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Last Name</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="last-name"
+                                name="lastName"
+                                value="<%= user.lastName %>"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                value="<%= user.email %>"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="bio">Bio</label>
+                            <textarea
+                                class="form-control"
+                                id="bio"
+                                name="bio"
+                                rows="3"
+                            >
+                                <%= user.bio %>
+                            </textarea>
+                        </div>
+                        <br />
+                        <button type="submit" class="btn btn-primary">
+                            Save Changes
+                        </button>
+                    </form>
+                </div>
+                <div class="tab-pane" id="security">
+                    <h3>Security</h3>
+                    <%- include ("./partials/messages"); %>
+                    <form method="POST" action="/users/password-update">
+                        <div class="form-group">
+                            <label for="current-password"
+                                >Current Password</label
+                            >
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="current-password"
+                                name="currentPassword"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">New Password</label>
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                name="newPassword"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password"
+                                >Confirm Password</label
+                            >
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="confirm-password"
+                                name="newPasswordRepeated"
+                            />
+                        </div>
+                        <br />
+                        <button type="submit" class="btn btn-primary">
+                            Change Password
+                        </button>
+                    </form>
+                </div>
+                <div class="tab-pane" id="auctions-history">
+                    <h3>Previous objects:</h3>
+                    <%- include ("./partials/messages"); %>
+                    <div>
+                        <% if (objects && objects.length > 0) { %>
+                        <div class="category-container">
+                            <div class="object-list">
+                                <% objects.forEach((object) => { %>
+                                <a
+                                    href="/objects/<%= object._id %>"
+                                    style="
+                                        color: inherit;
+                                        text-decoration: none;
+                                    "
+                                >
+                                    <div class="object-container">
+                                        <div class="object-image-container">
+                                            <img
+                                                src="<%= '/uploads/' + object.image %>"
+                                                alt="<%= object.title %>"
+                                            />
+                                        </div>
+                                        <div class="object-details-container">
+                                            <h2 class="object-title">
+                                                <%= object.title %>
+                                            </h2>
+                                            <p class="object-description">
+                                                <%= object.description %>
+                                            </p>
+                                            <p class="object-price">
+                                                <%= object.startingPrice %> DZD
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <% }); %>
+                            </div>
+                        </div>
+                        <% } else { %>
+                        <br /><br /><br /><br />
+                        <h1 class="category-title">
+                            You haven't posted any object
+                        </h1>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="tab-pane" id="bids-history">
+                    <h3>Previous bids:</h3>
+                    <%- include ("./partials/messages"); %>
+                    <div>
+                        <% if (objectsForBids && objectsForBids.length > 0) { %>
+                        <div class="category-container">
+                            <div class="object-list">
+                                <% objectsForBids.forEach((objectsForBid) => {
+                                %>
+                                <a
+                                    href="/objects/<%= objectsForBid._id %>"
+                                    style="
+                                        color: inherit;
+                                        text-decoration: none;
+                                    "
+                                >
+                                    <div class="object-container">
+                                        <% objectsForBid.bids.forEach((bid) => {
+                                        %>
+                                        <h2>Your bid was: <%= bid.amount %></h2>
+                                        <% }); %>
+                                        <div class="object-image-container">
+                                            <img
+                                                src="/uploads/<%= objectsForBid.image %>"
+                                                alt="<%= objectsForBid.title %>"
+                                            />
+                                        </div>
+                                        <div class="object-details-container">
+                                            <h2 class="object-title">
+                                                <%= objectsForBid.title %>
+                                            </h2>
+                                            <p class="object-description">
+                                                <%= objectsForBid.description %>
+                                            </p>
+                                            <p class="object-price">
+                                                <%= objectsForBid.startingPrice
+                                                %> DZD
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <% }); %>
+                            </div>
+                        </div>
+                        <% } else { %>
+                        <br /><br /><br /><br />
+                        <h1 class="category-title">
+                            You haven't posted any object
+                        </h1>
+                        <% } %>
+                    </div>
+                </div>
             </div>
-            </p>
-            <a href="/users/account-settings" class="btn btn-primary"
-                >Account Settings</a
-            >
         </div>
     </div>
 </div>
 <%- include ("./partials/footer") %>
+
+<style>
+    .category-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .category-title {
+        margin-top: 10px;
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .object-list {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 20px;
+    }
+
+    .object-container {
+        background-color: #fff;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .object-container:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+    }
+
+    .object-image-container {
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .object-image-container img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .object-details-container {
+        padding: 20px;
+    }
+
+    .object-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .object-description {
+        margin-bottom: 10px;
+    }
+
+    .object-price {
+        font-size: 20px;
+        font-weight: bold;
+    }
+</style>

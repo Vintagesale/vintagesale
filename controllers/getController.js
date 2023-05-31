@@ -1,8 +1,8 @@
 const Object = require('../models/Object');
 const User = require('../models/User');
-const Faq= require('../models/faq');
-const Term= require('../models/term');
-const Privacy= require('../models/privacy');
+const Faq = require('../models/faq');
+const Term = require('../models/term');
+const Privacy = require('../models/privacy');
 
 // GET Home Page
 exports.getHomePage = (req, res) => {
@@ -27,15 +27,17 @@ exports.getCategoryPage = async (req, res) => {
 
 
 // GET Profile Page
-exports.getProfilePage = async(req, res) => {
+exports.getProfilePage = async (req, res) => {
     try {
         //console.log(req.user._id);
-        const objects= await Object.find({seller: req.user._id });
+        const objects = await Object.find({ seller: req.user._id });
+        const objectsForBids = await Object.find({ bids: { $elemMatch: { bidder: req.user._id } } });
         return res.status(200).render('profile', {
             isLoggedIn: true,
             user: req.user,
             req: req,
-            objects
+            objects,
+            objectsForBids
         });
     } catch (err) {
         console.error(err);
@@ -61,31 +63,31 @@ exports.getSellPage = (req, res) => {
 }
 
 // GET FAQs Page
-exports.getFAQsPage = async(req, res) => {
+exports.getFAQsPage = async (req, res) => {
     const isLoggedIn = req.isAuthenticated();
-    const faqs= await Faq.find({ });
+    const faqs = await Faq.find({});
     res.render('faqs', { isLoggedIn, faqs, req: req });
 }
 
 // GET Terms of Use Page
 exports.getTermsOfUsePage = async (req, res) => {
     const isLoggedIn = req.isAuthenticated();
-    const terms= await Term.find({ });
+    const terms = await Term.find({});
 
-    try{
-        return res.status(200).render('terms-of-use', {isLoggedIn, terms, req: req});
-    } catch(err) {
+    try {
+        return res.status(200).render('terms-of-use', { isLoggedIn, terms, req: req });
+    } catch (err) {
         return res.status(404).send("Page 404: Page not found");
     }
 }
 
 // GET Privacy Policy Page
-exports.getPrivacyPolicyPage = async(req, res) => {
-    try{
+exports.getPrivacyPolicyPage = async (req, res) => {
+    try {
         const isLoggedIn = req.isAuthenticated();
-        const privacy= await Privacy.findOne({ });
-        return res.status(200).render('privacy-policy', {isLoggedIn, privacy, req: req});
-    } catch(err) {
+        const privacy = await Privacy.findOne({});
+        return res.status(200).render('privacy-policy', { isLoggedIn, privacy, req: req });
+    } catch (err) {
         return res.status(404).send("Page 404: Page not found");
     }
 }
@@ -117,32 +119,32 @@ exports.getBuyPage = async (req, res) => {
 }
 
 // GET Dashboard Page
-exports.getDashboardPage= (req, res) => {
-    try{
+exports.getDashboardPage = (req, res) => {
+    try {
         return res.render('dashboard');
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return res.status(404).send("Page 404: Page not found");
     }
 }
 
 // GET Objects Page
-exports.getObjectsAdminPage= async(req, res) => {
-    try{
-        const objects = await Object.find({ });
-        return res.render('objects', {objects});
-    } catch(err) {
+exports.getObjectsAdminPage = async (req, res) => {
+    try {
+        const objects = await Object.find({});
+        return res.render('objects', { objects });
+    } catch (err) {
         console.log(err);
         return res.status(404).send("Page 404: Page not found.");
     }
 }
 
 // GET Users Page
-exports.getUsersAdminPage= async(req, res) => {
-    try{
-        const users = await User.find({ });
-        return res.render('users', {users});
-    } catch(err) {
+exports.getUsersAdminPage = async (req, res) => {
+    try {
+        const users = await User.find({});
+        return res.render('users', { users });
+    } catch (err) {
         console.log(err);
         return res.status(404).send("Page 404: Page not found.");
     }
@@ -157,7 +159,7 @@ exports.getBuyAdminPage = async (req, res) => {
             return res.status(404).send('Object not found');
         }
         // Render the buyAdmin.ejs page and pass in the object data
-        return res.render('buyAdmin', { object}); // , isLoggedIn, currentUser: req.user 
+        return res.render('buyAdmin', { object }); // , isLoggedIn, currentUser: req.user 
     } catch (err) {
         console.error(err);
         return res.status(500).send('Server error');
@@ -173,7 +175,7 @@ exports.getProfileAdminPage = async (req, res) => {
             return res.status(404).send('User not found');
         }
         // Render the buyAdmin.ejs page and pass in the object data
-        return res.render('profileAdmin', { user}); // , isLoggedIn, currentUser: req.user 
+        return res.render('profileAdmin', { user }); // , isLoggedIn, currentUser: req.user 
     } catch (err) {
         console.error(err);
         return res.status(500).send('Server error');
@@ -181,12 +183,12 @@ exports.getProfileAdminPage = async (req, res) => {
 }
 
 // GET FAQsAdmin Page
-exports.getFAQsAdminPage = async(req, res) => {
-    try{
-    //const isLoggedIn = req.isAuthenticated();
-    const faqs= await Faq.find({ });
-    res.render('faqsAdmin', {faqs}); //, { isLoggedIn }
-    } catch(err) {
+exports.getFAQsAdminPage = async (req, res) => {
+    try {
+        //const isLoggedIn = req.isAuthenticated();
+        const faqs = await Faq.find({});
+        res.render('faqsAdmin', { faqs }); //, { isLoggedIn }
+    } catch (err) {
         console.log(err);
         return res.status(404).send("Page 404: Page not found.")
     }
@@ -195,8 +197,8 @@ exports.getFAQsAdminPage = async(req, res) => {
 // GET Faq Admin Delete
 exports.getFaqAdminDelete = async (req, res) => {
     try {
-        const faq = await Faq.findOne({_id: req.params.id});
-        return res.status(200).render('faqsAdminDelete', {faq});
+        const faq = await Faq.findOne({ _id: req.params.id });
+        return res.status(200).render('faqsAdminDelete', { faq });
     } catch (err) {
         console.error(err);
         return res.status(404).send('Page 404: page not found');
@@ -206,8 +208,8 @@ exports.getFaqAdminDelete = async (req, res) => {
 // GET Faq Admin Update
 exports.getFaqAdminEdit = async (req, res) => {
     try {
-        const faq = await Faq.findOne({_id: req.params.id});
-        return res.status(200).render('faqsAdminEdit', {faq});
+        const faq = await Faq.findOne({ _id: req.params.id });
+        return res.status(200).render('faqsAdminEdit', { faq });
     } catch (err) {
         console.error(err);
         return res.status(404).send('Page 404: page not found');
@@ -215,63 +217,61 @@ exports.getFaqAdminEdit = async (req, res) => {
 }
 
 // GET Terms of Use Page for Admin
-exports.getTermsOfUseAdminPage = async(req, res) => {
-    try{
-        const terms= await Term.find({ });
-        return res.status(200).render('terms-of-use-admin', {terms}); // isLoggedIn
-    } catch(err) {
+exports.getTermsOfUseAdminPage = async (req, res) => {
+    try {
+        const terms = await Term.find({});
+        return res.status(200).render('terms-of-use-admin', { terms }); // isLoggedIn
+    } catch (err) {
         return res.status(404).send("Page 404: Page not found");
     }
 }
 
 // GET Terms of Use Delete Page for Admin
-exports.getTermsOfUseAdminDeletePage = async(req, res) => {
-    const term= await Term.findOne({_id: req.params.id});
-    try{
-        return res.status(200).render('terms-of-use-admin-delete', {term}); // isLoggedIn
-    } catch(err) {
+exports.getTermsOfUseAdminDeletePage = async (req, res) => {
+    const term = await Term.findOne({ _id: req.params.id });
+    try {
+        return res.status(200).render('terms-of-use-admin-delete', { term }); // isLoggedIn
+    } catch (err) {
         return res.status(404).send("Page 404: Page not found");
     }
 }
 
 // GET Privacy Policy Page for Admin
 exports.getPolicyPrivacyAdminPage = async (req, res) => {
-    try{
-        const privacy= await Privacy.findOne({ });
-        return res.status(200).render('privacy-policy-admin', {privacy});
-    } catch(err) {
+    try {
+        const privacy = await Privacy.findOne({});
+        return res.status(200).render('privacy-policy-admin', { privacy });
+    } catch (err) {
         return res.status(404).send("Page 404: Page not found");
     }
 }
 
 // GET Terms of Use Delete Page for Admin
-exports.getTermsOfUseAdminEditPage = async(req, res) => {
-    const term= await Term.findOne({_id: req.params.id});
-    try{
-        return res.status(200).render('terms-of-use-admin-edit', {term}); // isLoggedIn
-    } catch(err) {
+exports.getTermsOfUseAdminEditPage = async (req, res) => {
+    const term = await Term.findOne({ _id: req.params.id });
+    try {
+        return res.status(200).render('terms-of-use-admin-edit', { term }); // isLoggedIn
+    } catch (err) {
         return res.status(404).send("Page 404: Page not found");
     }
 }
 
 // GET Search Page
-exports.getSearchPage = async(req, res) => {
-    try{
-        const objects= await Object.find({ });
+exports.getSearchPage = async (req, res) => {
+    try {
+        const objects = await Object.find({});
         const isLoggedIn = await req.isAuthenticated();
-        return res.status(200).render("search", {objects ,isLoggedIn});
-    } catch(err) {
+        return res.status(200).render("search", { objects, isLoggedIn });
+    } catch (err) {
         console.log(err);
         return res.status(404).send("Page 404: not found");
     }
 }
 
-// GET Search Page
-exports.getHistoryPage = async(req, res) => {
-    try{
-        const objects= await Object.find({seller: req.user._id });
-        const objectsForBids= await Object.find({bids: { $elemMatch: { bidder: req.user._id } } });
-
+exports.getHistoryPage = async (req, res) => {
+    try {
+        const objects = await Object.find({ seller: req.user._id });
+        const objectsForBids = await Object.find({ bids: { $elemMatch: { bidder: req.user._id } } });
         return res.status(200).render("history", {
             isLoggedIn: true,
             user: req.user,
@@ -279,7 +279,7 @@ exports.getHistoryPage = async(req, res) => {
             objects,
             objectsForBids
         });
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return res.status(404).send("Page 404: not found");
     }
