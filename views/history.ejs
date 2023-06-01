@@ -22,41 +22,36 @@
                     <%- include ("./partials/messages"); %>
                     <div>
                         <% if (objects && objects.length > 0) { %>
-                        <div class="category-container container">
-                            <div class="object-list row">
+                        <div class="category-container">
+                            <div class="object-list">
                                 <% objects.forEach((object) => { %>
-                                <div class="col-md-4">
-                                    <a
-                                        href="/objects/<%= object._id %>"
-                                        style="
-                                            color: inherit;
-                                            text-decoration: none;
-                                        "
-                                    >
-                                        <div class="object-container">
-                                            <div class="object-image-container">
-                                                <img
-                                                    src="<%= '/uploads/' + object.image %>"
-                                                    alt="<%= object.title %>"
-                                                />
-                                            </div>
-                                            <div
-                                                class="object-details-container"
-                                            >
-                                                <p class="object-description">
-                                                    <%= object.category %>
-                                                </p>
-                                                <h2 class="object-title">
-                                                    <%= object.title %>
-                                                </h2>
-                                                <p class="object-price">
-                                                    <%= object.startingPrice %>
-                                                    DZD
-                                                </p>
-                                            </div>
+                                <a
+                                    href="/objects/<%= object._id %>"
+                                    style="
+                                        color: inherit;
+                                        text-decoration: none;
+                                    "
+                                >
+                                    <div class="object-container">
+                                        <div class="object-image-container">
+                                            <img
+                                                src="<%= '/uploads/' + object.image %>"
+                                                alt="<%= object.title %>"
+                                            />
                                         </div>
-                                    </a>
-                                </div>
+                                        <div class="object-details-container">
+                                            <h2 class="object-title">
+                                                <%= object.title %>
+                                            </h2>
+                                            <p class="object-description">
+                                                <%= object.description %>
+                                            </p>
+                                            <p class="object-price">
+                                                <%= object.startingPrice %> DZD
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
                                 <% }); %>
                             </div>
                         </div>

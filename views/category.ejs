@@ -2,8 +2,8 @@
 <div>
     <% if (objects && objects.length > 0) { %>
     <h1 class="category-title">Category: <%= objects[0].category %></h1>
-    <div class="category-container container">
-        <div class="object-list row">
+    <div class="category-container">
+        <div class="object-list">
             <% objects.forEach((object) => { %>
             <div class="col-md-3">
                 <a
@@ -53,9 +53,8 @@
     }
 
     .object-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
         grid-gap: 20px;
     }
 
@@ -65,10 +64,6 @@
         border-radius: 5px;
         overflow: hidden;
         transition: all 0.3s ease;
-        width: 100%;
-        max-width: 350px; /* Adjust the width as needed */
-        max-height: 400px;
-        margin-bottom: 20px;
     }
 
     .object-container:hover {
@@ -86,7 +81,7 @@
 
     .object-image-container img {
         max-width: 100%;
-        max-height: 200px;
+        max-height: 100%;
         object-fit: contain;
     }
 
