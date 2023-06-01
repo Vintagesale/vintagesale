@@ -267,20 +267,3 @@ exports.getSearchPage = async (req, res) => {
         return res.status(404).send("Page 404: not found");
     }
 }
-
-exports.getHistoryPage = async (req, res) => {
-    try {
-        const objects = await Object.find({ seller: req.user._id });
-        const objectsForBids = await Object.find({ bids: { $elemMatch: { bidder: req.user._id } } });
-        return res.status(200).render("history", {
-            isLoggedIn: true,
-            user: req.user,
-            req: req,
-            objects,
-            objectsForBids
-        });
-    } catch (err) {
-        console.log(err);
-        return res.status(404).send("Page 404: not found");
-    }
-}

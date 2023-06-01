@@ -1,5 +1,5 @@
 <%- include ("./partials/header") %>
-<div class="container mt-5">
+<div class="container-fluid mt-3">
     <div class="row">
         <div class="col-md-3" style="padding: 20px; border: 1px solid #ccc">
             <div class="list-group">
@@ -181,50 +181,53 @@
                     <%- include ("./partials/messages"); %>
                     <div>
                         <% if (objects && objects.length > 0) { %>
-                        <div class="category-container">
-                            <div class="object-list">
+                        <div class="category-container container">
+                            <div class="object-list row">
                                 <% objects.forEach((object) => { %>
-                                <a
-                                    href="/objects/<%= object._id %>"
-                                    style="
-                                        color: inherit;
-                                        text-decoration: none;
-                                    "
-                                >
-                                    <div class="object-container">
-                                        <div class="object-image-container">
-                                            <img
-                                                src="<%= '/uploads/' + object.image %>"
-                                                alt="<%= object.title %>"
-                                            />
+                                <div class="col-md-4">
+                                    <a
+                                        href="/objects/<%= object._id %>"
+                                        style="
+                                            color: inherit;
+                                            text-decoration: none;
+                                        "
+                                    >
+                                        <div class="object-container">
+                                            <div class="object-image-container">
+                                                <img
+                                                    src="<%= '/uploads/' + object.image %>"
+                                                    alt="<%= object.title %>"
+                                                />
+                                            </div>
+                                            <div
+                                                class="object-details-container"
+                                            >
+                                                <p class="object-description">
+                                                    <%= object.category %>
+                                                </p>
+                                                <h2 class="object-title">
+                                                    <%= object.title %>
+                                                </h2>
+                                                <p class="object-price">
+                                                    <%= object.startingPrice %>
+                                                    DZD
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="object-details-container">
-                                            <h2 class="object-title">
-                                                <%= object.title %>
-                                            </h2>
-                                            <p class="object-description">
-                                                <%= object.description %>
-                                            </p>
-                                            <p class="object-price">
-                                                <%= object.startingPrice %> DZD
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
+                                    </a>
+                                </div>
                                 <% }); %>
                             </div>
                         </div>
                         <% } else { %>
-                        <br /><br /><br /><br />
-                        <h1 class="category-title">
-                            You haven't posted any object
-                        </h1>
+                        <h1 class="category-title">Category empty</h1>
                         <% } %>
                     </div>
                 </div>
                 <div class="tab-pane" id="bids-history">
                     <h3>Previous bids:</h3>
                     <%- include ("./partials/messages"); %>
+
                     <div>
                         <% if (objectsForBids && objectsForBids.length > 0) { %>
                         <div class="category-container">
@@ -241,7 +244,7 @@
                                     <div class="object-container">
                                         <% objectsForBid.bids.forEach((bid) => {
                                         %>
-                                        <h2>Your bid was: <%= bid.amount %></h2>
+                                        <h3>Your bid was: <%= bid.amount %></h3>
                                         <% }); %>
                                         <div class="object-image-container">
                                             <img
@@ -253,9 +256,6 @@
                                             <h2 class="object-title">
                                                 <%= objectsForBid.title %>
                                             </h2>
-                                            <p class="object-description">
-                                                <%= objectsForBid.description %>
-                                            </p>
                                             <p class="object-price">
                                                 <%= objectsForBid.startingPrice
                                                 %> DZD
@@ -295,8 +295,9 @@
     }
 
     .object-list {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         grid-gap: 20px;
     }
 
@@ -306,6 +307,10 @@
         border-radius: 5px;
         overflow: hidden;
         transition: all 0.3s ease;
+        width: 100%;
+        max-width: 350px; /* Adjust the width as needed */
+        max-height: 400px;
+        margin-bottom: 20px;
     }
 
     .object-container:hover {
@@ -323,7 +328,7 @@
 
     .object-image-container img {
         max-width: 100%;
-        max-height: 100%;
+        max-height: 200px;
         object-fit: contain;
     }
 

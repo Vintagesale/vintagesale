@@ -1,6 +1,6 @@
 <%- include ("./partials/header") %>
 <div>
-    <br><br>
+    <br /><br />
     <div class="container">
         <div class="row">
             <div class="col-md-3"></div>
@@ -8,64 +8,90 @@
                 <form action="/search" method="post">
                     <div class="form-group">
                         <label for="title"><h3>Search for something</h3></label>
-                        <br>
-                        <input type="text" id="title" name="title" class="form-control" placeholder="Enter the name of object" autocomplete="off"/>
-                        <br>
-                        <input type="text" id="startingPrice" name="minimumStartingPrice" class="form-control" placeholder="Minimum of starting price" autocomplete="off"/>
-                        <br>
-                        <input type="text" id="startingPrice" name="maximumStartingPrice" class="form-control" placeholder="Maximum of starting price" autocomplete="off"/>
-                        <br>
+                        <br />
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            class="form-control"
+                            placeholder="Enter the name of object"
+                            autocomplete="off"
+                        />
+                        <br />
+                        <input
+                            type="text"
+                            id="startingPrice"
+                            name="minimumStartingPrice"
+                            class="form-control"
+                            placeholder="Minimum of starting price"
+                            autocomplete="off"
+                        />
+                        <br />
+                        <input
+                            type="text"
+                            id="startingPrice"
+                            name="maximumStartingPrice"
+                            class="form-control"
+                            placeholder="Maximum of starting price"
+                            autocomplete="off"
+                        />
+                        <br />
                         <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary btn-block text-center">search</button>
-                         </div>
+                            <button
+                                type="submit"
+                                class="btn btn-dark btn-block text-center"
+                            >
+                                search
+                            </button>
+                        </div>
                     </div>
-                    
                 </form>
             </div>
             <div class="col-md-3"></div>
         </div>
     </div>
 
-    <br><br><br><br>
+    <br /><br /><br /><br />
     <div>
         <% if (objects && objects.length > 0) { %>
-        <h1 class="category-title">Objects:</h1>
-        <div class="category-container">
-            <div class="object-list">
+        <div class="category-container container">
+            <div class="object-list row">
                 <% objects.forEach((object) => { %>
-                <a
-                    href="/objects/<%= object._id %>"
-                    style="color: inherit; text-decoration: none"
-                >
-                    <div class="object-container">
-                        <div class="object-image-container">
-                            <img
-                                src="<%= '/uploads/' + object.image %>"
-                                alt="<%= object.title %>"
-                            />
+                <div class="col-md-3">
+                    <a
+                        href="/objects/<%= object._id %>"
+                        style="color: inherit; text-decoration: none"
+                    >
+                        <div class="object-container">
+                            <div class="object-image-container">
+                                <img
+                                    src="<%= '/uploads/' + object.image %>"
+                                    alt="<%= object.title %>"
+                                />
+                            </div>
+                            <div class="object-details-container">
+                                <p class="object-description">
+                                    <%= object.category %>
+                                </p>
+                                <h2 class="object-title">
+                                    <%= object.title %>
+                                </h2>
+                                <p class="object-price">
+                                    <%= object.startingPrice %> DZD
+                                </p>
+                            </div>
                         </div>
-                        <div class="object-details-container">
-                            <h2 class="object-title"><%= object.title %></h2>
-                            <p class="object-description">
-                                <%= object.description %>
-                            </p>
-                            <p class="object-price">
-                                <%= object.startingPrice %> DZD
-                            </p>
-                        </div>
-                    </div>
-                </a>
-                <br><br>
+                    </a>
+                </div>
                 <% }); %>
             </div>
         </div>
         <% } else { %>
         <h1 class="category-title">Category empty</h1>
         <% } %>
-    </div> 
+    </div>
 </div>
 <%- include ("./partials/footer") %>
-
 
 <style>
     .category-container {
@@ -82,8 +108,9 @@
     }
 
     .object-list {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         grid-gap: 20px;
     }
 
@@ -93,6 +120,10 @@
         border-radius: 5px;
         overflow: hidden;
         transition: all 0.3s ease;
+        width: 100%;
+        max-width: 350px; /* Adjust the width as needed */
+        max-height: 400px;
+        margin-bottom: 20px;
     }
 
     .object-container:hover {
@@ -110,7 +141,7 @@
 
     .object-image-container img {
         max-width: 100%;
-        max-height: 100%;
+        max-height: 200px;
         object-fit: contain;
     }
 
