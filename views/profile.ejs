@@ -1,6 +1,6 @@
 <%- include ("./partials/header") %>
 <div class="container-fluid mt-3">
-    <div class="row">
+    <div class="row" style="padding: 5px">
         <div class="col-md-3" style="padding: 20px; border: 1px solid #ccc">
             <div class="list-group">
                 <h3>Account Settings</h3>
@@ -227,7 +227,6 @@
                 <div class="tab-pane" id="bids-history">
                     <h3>Previous bids:</h3>
                     <%- include ("./partials/messages"); %>
-
                     <div>
                         <% if (objectsForBids && objectsForBids.length > 0) { %>
                         <div class="category-container">
