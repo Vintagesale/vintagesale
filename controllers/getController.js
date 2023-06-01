@@ -119,9 +119,20 @@ exports.getBuyPage = async (req, res) => {
 }
 
 // GET Dashboard Page
-exports.getDashboardPage = (req, res) => {
+exports.getDashboardPage = async(req, res) => {
     try {
-        return res.render('dashboard');
+        const users= await User.find({});
+        const objects= await Object.find({});
+
+        const bids = await Object.find({ bids: { $ne: [] } });
+        const freeObjects = await Object.find({ bids: [] });
+        
+        return res.render('dashboard',{
+            users,
+            objects,
+            bids,
+            freeObjects
+        });
     } catch (err) {
         console.log(err);
         return res.status(404).send("Page 404: Page not found");
