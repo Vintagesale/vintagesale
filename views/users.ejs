@@ -1,21 +1,21 @@
 <%- include ("./partials/headerAdmin") %>
 <div>
     <% if (users && users.length > 0) { %>
-    <div class="category-container">
+    <div class="container category-container">
         <div class="object-list">
             <% users.forEach((user) => { %>
             <a
                 href="/dashboard/users/profileAdmin/<%= user._id %>"
                 style="color: inherit; text-decoration: none"
             >
-                <div class="object-container">
-                    <div class="object-image-container">
+                <div class="row object-container">
+                    <div class="col-md-4 object-image-container">
                         <img
                         src="<%= '/uploads/' + user.profilePicture%>"
                         alt="Profile Picture"
                         />
                     </div>
-                    <div class="object-details-container">
+                    <div class=" col-md-8 object-details-container">
                         <h2 class="object-name"><%= user.firstName %> <%= user.lastName %></h2>
                         <p class="object-description">
                             <%= user.email %>
@@ -30,7 +30,7 @@
         </div>
     </div>
     <% } else { %>
-    <h1 class="category-title">Category empty</h1>
+    <h1 class="category-title">There is no user.</h1>
     <% } %>
 </div>
 <%- include ("./partials/footer") %>
