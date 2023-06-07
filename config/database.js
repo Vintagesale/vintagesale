@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 require('dotenv').config()
 
-const db = process.env.MongoCloudURI
+const db = process.env.MongoLocalURI
 
 module.exports = function () {
     return new Promise((resolve, reject) => {
