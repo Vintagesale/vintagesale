@@ -17,7 +17,7 @@ const PrivacySchema = new Schema({
         minlength: 3,
         maxlength: 1000,
     },
-    
+
     // How We Use Your Information
     howWeUseYourInformation: {
         type: String,
@@ -51,5 +51,6 @@ const PrivacySchema = new Schema({
     },
 }, { timestamps: true });
 
+const Privacy = mongoose.model('Privacy', PrivacySchema);
 
-module.exports = mongoose.model('Privacy', PrivacySchema);
+module.exports = Privacy;

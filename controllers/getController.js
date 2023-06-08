@@ -119,15 +119,15 @@ exports.getBuyPage = async (req, res) => {
 }
 
 // GET Dashboard Page
-exports.getDashboardPage = async(req, res) => {
+exports.getDashboardPage = async (req, res) => {
     try {
-        const users= await User.find({});
-        const objects= await Object.find({});
+        const users = await User.find({});
+        const objects = await Object.find({});
 
         const bids = await Object.find({ bids: { $ne: [] } });
         const freeObjects = await Object.find({ bids: [] });
-        
-        return res.render('dashboard',{
+
+        return res.render('dashboard', {
             users,
             objects,
             bids,
